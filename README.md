@@ -167,16 +167,6 @@ Beyond anomaly detection, `explain.py` computes clinical features per recording:
 
 ## Results
 
-### CNN-VAE
-
-![CNN-VAE Evaluation](outputs/vae_evaluation.png)
-
-### ResNet-AE
-
-![ResNet-AE Evaluation](outputs/resnet_evaluation.png)
-
-### Comparison
-
 | Model | AUROC | AUPRC | Recall | Precision | F2 | Missed Anomalies |
 |---|---|---|---|---|---|---|
 | CNN-VAE | 0.9036 | 0.5071 | 0.9249 | 0.3553 | 0.7003 | 258 / 3569 |
