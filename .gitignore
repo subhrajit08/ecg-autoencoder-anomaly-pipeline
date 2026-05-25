@@ -6,6 +6,5 @@ __pycache__/
 .env
 mlruns/
 mlflow.db
-outputs/
 *.log
 .DS_Store
