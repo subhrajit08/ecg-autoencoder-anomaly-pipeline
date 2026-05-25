@@ -1,0 +1,46 @@
+name: ECG Anomaly Detection CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install fastapi uvicorn pydantic numpy
+
+      - name: Test API imports
+        run: |
+          cd api
+          python -c "from schemas import BeatRequest, PredictionResponse; print('Schemas OK')"
+
+  docker:
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t ecg-anomaly-detection .
+
+      - name: Verify container starts
+        run: |
+          docker run -d -p 8000:8000 --name ecg-api ecg-anomaly-detection
+          sleep 10
+          curl http://localhost:8000/health
+          docker stop ecg-api
