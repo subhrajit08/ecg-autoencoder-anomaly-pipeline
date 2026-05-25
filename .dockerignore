@@ -1,0 +1,7 @@
+data/raw/
+myenv/
+__pycache__/
+*.pyc
+outputs/
+mlruns/
+.git/

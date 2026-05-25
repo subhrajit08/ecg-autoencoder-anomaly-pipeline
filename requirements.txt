@@ -1,0 +1,11 @@
+fastapi
+uvicorn
+torch
+numpy
+scipy
+wfdb
+scikit-learn
+matplotlib
+pydantic
+python-multipart
+mlflow

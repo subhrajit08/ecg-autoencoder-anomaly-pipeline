@@ -1,0 +1,1 @@
+(errors - errors.min()) / (errors.max() - errors.min())

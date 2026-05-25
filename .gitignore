@@ -1,0 +1,11 @@
+data/raw/
+myenv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+mlruns/
+mlflow.db
+outputs/
+*.log
+.DS_Store
