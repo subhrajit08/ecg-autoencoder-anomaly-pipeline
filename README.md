@@ -90,7 +90,7 @@ ecg-autoencoder-anomaly-pipeline/
 ## Installation
 
 ```bash
-git clone https://github.com/subhrajit08/ecg-autoencoder-anomaly-pipeline.git
+git clone https://github.com/subhrajit08/ecg-autoencoder-anomaly-detection-pipeline.git
 cd ecg-autoencoder-anomaly-pipeline
 pip install -r requirements.txt
 ```
@@ -194,8 +194,6 @@ CNN-VAE is the primary model — higher AUROC and recall, catches more arrhythmi
 **Patient-level split** — train and test patients never overlap, preventing data leakage and ensuring honest evaluation.
 
 **Smooth L1 loss** — more robust than MSE for ECG signals with sharp R-peaks. Prevents over-penalization of high-amplitude spikes during training.
-
-**No Tanh on decoder output** — z-score normalized beats have values beyond [-1, 1]. Removing Tanh allows the decoder to reconstruct the full amplitude range accurately, fixing inverted anomaly scores.
 
 **F2 score optimization** — threshold tuned to maximize F2 (recall-weighted) because missing an arrhythmia is clinically more dangerous than a false alarm.
 
