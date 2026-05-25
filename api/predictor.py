@@ -6,11 +6,35 @@ import torch
 import numpy as np
 from vae import CNNVAE, LATENT_DIM as VAE_LATENT_DIM
 from resnet_ae import ResNetAE, LATENT_DIM as RESNET_LATENT_DIM
+from scipy.signal import butter, filtfilt
 
 DEVICE = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 MODELS_DIR = os.path.join(os.path.dirname(__file__), '..', 'models')
 THRESHOLD_PERCENTILE = 80
 
+FS     = 360
+WINDOW = 90
+
+def bandpass_filter(signal, lowcut=0.5, highcut=40.0, fs=FS):
+    nyq  = fs / 2.0
+    b, a = butter(4, [lowcut/nyq, highcut/nyq], btype='band')
+    return filtfilt(b, a, signal, axis=0)
+
+def segment_signal(signal):
+    from scipy.signal import find_peaks
+    sig = signal[:, 0]
+    filtered = bandpass_filter(signal)
+    sig_f = filtered[:, 0]
+    r_peaks, _ = find_peaks(sig_f, distance=int(FS*0.5), height=np.mean(sig_f))
+    beats = []
+    for peak in r_peaks:
+        start, end = peak - WINDOW, peak + WINDOW
+        if start >= 0 and end <= len(sig_f):
+            beat = sig_f[start:end]
+            mean = beat.mean()
+            std  = beat.std() + 1e-8
+            beats.append((beat - mean) / std)
+    return np.array(beats, dtype=np.float32)
 
 class ModelPredictor:
 
@@ -79,6 +103,14 @@ class ModelPredictor:
             'threshold'         : round(threshold, 4),
             'predictions'       : predictions
         }
+    
+    def predict_from_signal(self, signal, model_name):
+        beats_array = segment_signal(signal)
+
+        if len(beats_array) == 0:
+            raise ValueError("No beats detected in signal")
+
+        return self.predict(beats_array.tolist(), model_name)
 
 
 predictor = ModelPredictor()

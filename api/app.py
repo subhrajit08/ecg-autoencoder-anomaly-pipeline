@@ -2,7 +2,9 @@ import sys
 import os
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, UploadFile, File
+import io
+import numpy as np
 from fastapi.middleware.cors import CORSMiddleware
 from api.schemas import BeatRequest, PredictionResponse
 from api.predictor import predictor
@@ -78,3 +80,23 @@ def list_models():
             }
         ]
     }
+
+@app.post("/predict_csv")
+async def predict_csv(
+    file: UploadFile = File(...),
+    model: str = "cnnvae"
+):
+    if not file.filename.endswith('.csv'):
+        raise HTTPException(status_code=400, detail="Only CSV files accepted")
+
+    contents = await file.read()
+    signal = np.loadtxt(io.BytesIO(contents), delimiter=',')
+
+    if signal.ndim == 1:
+        signal = signal.reshape(-1, 1)
+
+    try:
+        result = predictor.predict_from_signal(signal, model)
+        return result
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
