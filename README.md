@@ -207,3 +207,11 @@ CNN-VAE is the primary model — higher AUROC and recall, catches more arrhythmi
 ## Tech Stack
 
 Python · PyTorch · FastAPI · Docker · MLflow · GitHub Actions · wfdb · scipy · scikit-learn · numpy · matplotlib
+
+---
+
+## References
+
+- Mohebbanaaz, Y. P. S., & Kumari, L. V. R. (2020). **A Review on Arrhythmia Classification Using ECG Signals.** *2020 IEEE International Students' Conference on Electrical, Electronics and Computer Science (SCEECS)*, 1-6. [doi: 10.1109/SCEECS48394.2020.9](https://doi.org/10.1109/SCEECS48394.2020.9)
+
+- Zhou, Z.-H., Wu, J., & Tang, W. (2002). **Ensembling Neural Networks: Many Could Be Better Than All.** *Artificial Intelligence*, 137, 239-263. [doi: 10.1016/S0004-3702(02)00190-X](https://doi.org/10.1016/S0004-3702(02)00190-X)
