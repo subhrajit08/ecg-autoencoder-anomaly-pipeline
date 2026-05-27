@@ -15,8 +15,11 @@ Unsupervised cardiac arrhythmia detection using deep learning autoencoders train
 
 ## Dataset
 
-MIT-BIH Arrhythmia Database from PhysioNet. 48 half-hour ECG recordings, 47 patients, 360 Hz sampling rate.
+[MIT-BIH Arrhythmia Database from PhysioNet](https://physionet.org/content/mitdb/1.0.0/). 48 half-hour ECG recordings, 47 patients, 360 Hz sampling rate.
 Beat types classified as normal: N, L, R, e, j. Anomaly: V, A, F, /, S, E, J, a, f.
+
+<img width="1911" height="471" alt="image" src="https://github.com/user-attachments/assets/2ded55f4-f991-4469-9fbe-2d699fe5564d" />
+
 
 ---
 
